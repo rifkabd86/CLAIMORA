@@ -1,0 +1,531 @@
+/* ==========================================================================
+   CLAIMORA - Responsive Design System (Desktop, Tablet, Smartphone)
+   Breakpoints:
+   - Desktop Default : > 1200px (Sidebar 260px, 4 KPI cols, 2-col split views)
+   - Tablet Landscape: <= 1200px (Compact Sidebar 220px, 2 KPI cols, adaptive grids)
+   - Tablet Portrait & Smartphone: <= 768px (Off-canvas Drawer, 64px Bottom Nav, 1-col layout)
+   ========================================================================== */
+
+/* ─── Mobile Bottom Navigation (Hidden on Desktop > 768px) ─────────────── */
+.mobile-bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: linear-gradient(180deg, #f4fbf7 0%, #eaf7f0 100%);
+    border-top: 1px solid var(--primary-200);
+    z-index: 950;
+    box-shadow: 0 -4px 18px rgba(15, 39, 29, 0.08);
+    padding: 0 8px env(safe-area-inset-bottom, 0px);
+    box-sizing: border-box;
+}
+
+.bottom-nav-items {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 100%;
+    max-width: 540px;
+    margin: 0 auto;
+}
+
+.bottom-nav-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    color: var(--text-secondary);
+    font-size: 11px;
+    font-weight: 600;
+    text-decoration: none;
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    padding: 4px 2px;
+    transition: var(--transition);
+}
+
+.bottom-nav-item span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.bottom-nav-item svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
+
+.bottom-nav-item.active {
+    color: var(--primary-800);
+    font-weight: 700;
+}
+
+.bottom-nav-item.active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 22%;
+    right: 22%;
+    height: 3px;
+    background-color: var(--primary-700);
+    border-radius: 0 0 4px 4px;
+}
+
+.bottom-nav-item.active svg {
+    stroke: var(--primary-700);
+    transform: translateY(-1px);
+}
+
+/* ─── Sidebar Backdrop Overlay ─────────────────────────────────────────── */
+.sidebar-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(15, 39, 29, 0.55);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    z-index: 1000;
+}
+
+.sidebar-backdrop.active {
+    display: block;
+}
+
+/* ==========================================================================
+   A. BREAKPOINT 1200px – Tablet Lanskap / Layar Menengah
+   ========================================================================== */
+@media (max-width: 1200px) {
+    :root {
+        --sidebar-width: 220px;
+    }
+
+    .app-sidebar {
+        padding: 20px 14px;
+    }
+
+    .brand-icon {
+        width: 38px;
+        height: 38px;
+    }
+
+    .brand-text h1 {
+        font-size: 17px;
+    }
+
+    .nav-link {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+
+    .app-topbar {
+        padding: 0 24px;
+    }
+
+    .app-viewport {
+        padding: 22px 24px 60px;
+    }
+
+    /* KPI cards: 4 cols -> 2 cols */
+    .kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+    }
+
+    /* Dashboard & Split Views adapt to prevent horizontal overflow */
+    .dashboard-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .workflow-summary-grid {
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    }
+
+    .policy-split-view,
+    .customer-main-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .customer-quick-actions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .survey-sticky-card,
+    #policy-detail-card {
+        position: static !important;
+    }
+}
+
+/* ==========================================================================
+   B. BREAKPOINT 768px – Tablet Potret / Smartphone
+   ========================================================================== */
+@media (max-width: 768px) {
+    :root {
+        --sidebar-width: 280px;
+        --topbar-height: 62px;
+    }
+
+    /* 1. Off-Canvas Drawer Sidebar */
+    .app-sidebar {
+        width: 280px;
+        max-width: 85vw;
+        transform: translateX(-100%);
+        box-shadow: none;
+        z-index: 1005;
+        padding: 20px 16px;
+    }
+
+    .app-sidebar.drawer-open {
+        transform: translateX(0);
+        box-shadow: var(--shadow-drawer);
+    }
+
+    .sidebar-close-btn {
+        display: inline-flex;
+    }
+
+    /* 2. Main Content & Viewport Adjustment for 64px Bottom Nav */
+    .app-main {
+        margin-left: 0;
+        width: 100%;
+        min-width: 0;
+        padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+    }
+
+    .app-viewport {
+        padding: 18px 16px 84px;
+    }
+
+    /* 3. Topbar & Hamburger Button */
+    .mobile-menu-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: var(--radius-sm);
+        flex-shrink: 0;
+    }
+
+    .mobile-menu-toggle:hover {
+        background-color: var(--primary-soft);
+    }
+
+    .mobile-bottom-nav {
+        display: block;
+        height: 64px;
+    }
+
+    .app-topbar {
+        padding: 0 16px;
+    }
+
+    .topbar-left {
+        max-width: none;
+        gap: 10px;
+        min-width: 0;
+    }
+
+    .topbar-brand-title {
+        font-size: 17px;
+        letter-spacing: 0.8px;
+    }
+
+    .topbar-brand-tagline {
+        font-size: 10px;
+    }
+
+    .topbar-right {
+        gap: 10px;
+        flex-shrink: 0;
+    }
+
+    .user-details-top {
+        display: none;
+    }
+
+    /* 4. Welcome Banner & CTA Banner */
+    .welcome-card {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px 18px !important;
+        gap: 18px;
+    }
+
+    .welcome-content {
+        max-width: 100%;
+    }
+
+    .welcome-content h2 {
+        font-size: 20px;
+    }
+
+    .welcome-graphic {
+        width: 100%;
+        max-width: 220px;
+        margin: 0 auto;
+    }
+
+    .cta-register-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px 18px;
+        gap: 16px;
+    }
+
+    .cta-register-banner .cta-actions {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .cta-register-banner .btn-cta-primary,
+    .cta-register-banner .btn-cta-secondary {
+        flex: 1 1 auto;
+        justify-content: center;
+        text-align: center;
+    }
+
+    /* 5. KPI Grid & Cards */
+    .kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .kpi-card {
+        padding: 16px;
+        gap: 12px;
+    }
+
+    .kpi-icon {
+        width: 42px;
+        height: 42px;
+    }
+
+    .kpi-value {
+        font-size: 20px;
+    }
+
+    /* 6. Single-Column Conversion for Workstation Surveyor, Split Views & Forms */
+    .survey-split-view,
+    .policy-split-view,
+    .customer-main-grid,
+    .workflow-summary-grid,
+    .settings-grid,
+    .form-row {
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 16px;
+    }
+
+    /* Surveyor Workstation Header & Controls */
+    .survey-header-card {
+        padding: 16px 18px !important;
+    }
+
+    .survey-status-right {
+        text-align: left;
+        width: 100%;
+        padding-top: 12px;
+        border-top: 1px dashed var(--border-color);
+    }
+
+    /* 7. Filter Bars & Inputs */
+    .filter-bar-flex {
+        flex-direction: column;
+        align-items: stretch !important;
+        gap: 12px !important;
+    }
+
+    .filter-bar-flex > div,
+    .filter-bar-flex > button,
+    .filter-bar-flex > a,
+    .filter-bar-flex .form-control {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    /* 8. Cards, Tables, Tabs & Modals */
+    .card-header {
+        padding: 16px 18px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .card-body {
+        padding: 16px 18px;
+    }
+
+    .claim-wizard-container,
+    .claim-edit-container {
+        padding: 20px 18px;
+    }
+
+    .table-responsive {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .table th,
+    .table td {
+        padding: 11px 12px;
+        font-size: 13px;
+    }
+
+    .tabs-nav {
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 2px;
+    }
+
+    .tab-btn {
+        padding: 10px 14px;
+        font-size: 13px;
+        flex-shrink: 0;
+    }
+
+    /* Touch-friendly Modals */
+    .modal-backdrop {
+        padding: 12px;
+    }
+
+    .modal {
+        max-width: 100%;
+        max-height: calc(100vh - 24px);
+        border-radius: var(--radius-lg);
+    }
+
+    .modal-header {
+        padding: 16px 18px;
+    }
+
+    .modal-body {
+        padding: 18px;
+    }
+
+    .modal-footer {
+        padding: 14px 18px;
+        flex-wrap: wrap;
+    }
+}
+
+/* ==========================================================================
+   C. SMARTPHONE OPTIMIZATION (<= 480px, including 375x812)
+   ========================================================================== */
+@media (max-width: 480px) {
+    .app-viewport {
+        padding: 14px 12px 84px;
+    }
+
+    .kpi-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+    }
+
+    .customer-quick-actions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .customer-quick-actions .card {
+        padding: 12px !important;
+        gap: 10px !important;
+    }
+
+    .detail-info-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+    }
+
+    /* Surveyor Workstation Vehicle Card on Smartphone */
+    .survey-vehicle-left {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        width: 100%;
+    }
+
+    .survey-vehicle-thumb {
+        width: 100%;
+        height: 150px;
+    }
+
+    .survey-approval-actions,
+    .survey-form-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .survey-approval-actions .btn,
+    .survey-form-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Customer Progress Stepper: Vertical Stack on Smartphone so zero text overlaps */
+    .progress-stepper {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+        padding: 4px 0;
+    }
+
+    .progress-stepper-track {
+        display: none;
+    }
+
+    .progress-step-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-align: left !important;
+        width: 100%;
+    }
+
+    .progress-step-item > div:first-child {
+        margin: 0 !important;
+    }
+
+    .progress-step-text > div:first-child {
+        margin-top: 0 !important;
+    }
+
+    /* Wizard Stepper compact on 375px */
+    .wizard-steps::before {
+        left: 24px;
+        right: 24px;
+    }
+
+    .step-label {
+        font-size: 11px;
+        text-align: center;
+    }
+
+    .audit-date-range {
+        flex-direction: column;
+    }
+
+    .cta-register-banner .cta-actions {
+        flex-direction: column;
+    }
+
+    .cta-register-banner .btn-cta-primary,
+    .cta-register-banner .btn-cta-secondary {
+        width: 100%;
+    }
+}

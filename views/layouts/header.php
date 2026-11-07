@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<?= e(\Core\Security::generateCsrfToken()) ?>">
+    <title><?= e($title ?? 'CLAIMORA - Sistem Pengajuan Klaim Asuransi') ?></title>
+    
+    <!-- Design & Styling -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+<div class="app-container">
